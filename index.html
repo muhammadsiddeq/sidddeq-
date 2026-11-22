@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muhammad Siddeq | Website Designer &amp; Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-dark: #0d0716;
+      --bg-card: rgba(22, 13, 38, 0.78);
+      --purple-primary: #9333ea;
+      --purple-accent: #a855f7;
+      --purple-light: #c084fc;
+      --purple-glow: rgba(168, 85, 247, 0.45);
+      --gradient-primary: linear-gradient(135deg, #7e22ce 0%, #a855f7 55%, #ec4899 100%);
+      --text-white: #ffffff;
+      --text-gray: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border-subtle: rgba(168, 85, 247, 0.22);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      overflow-x: hidden;
+      line-height: 1.65;
+    }
+
+    /* Ambient Purple Glows */
+    body::before,
+    body::after {
+      content: '';
+      position: fixed;
+      width: 440px;
+      height: 440px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.16) 0%, transparent 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body::before {
+      top: -110px;
+      left: -110px;
+    }
+
+    body::after {
+      bottom: -120px;
+      right: -110px;
+    }
+
+    /* Sticky Navbar */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(13, 7, 22, 0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .navbar {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--text-white);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+    }
+
+    .logo span {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-gray);
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text-white);
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 100%;
+      height: 2px;
+      background: var(--gradient-primary);
+      border-radius: 2px;
+    }
+
+    .btn-gradient {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.68rem 1.5rem;
+      background: var(--gradient-primary);
+      color: var(--text-white);
+      font-weight: 600;
+      font-size: 0.92rem;
+      border: none;
+      border-radius: 50px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 18px rgba(168, 85, 247, 0.35);
+    }
+
+    .btn-gradient:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 26px rgba(168, 85, 247, 0.65);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.68rem 1.5rem;
+      border: 1px solid var(--purple-light);
+      color: var(--text-white);
+      background: transparent;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline:hover {
+      background: rgba(168, 85, 247, 0.16);
+      transform: translateY(-2px);
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      width: 26px;
+      height: 2.5px;
+      background: var(--text-white);
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* View Switching */
+    .page-view {
+      display: none;
+      animation: fadeUp 0.45s ease forwards;
+    }
+
+    .page-view.active {
+      display: block;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section-block {
+      padding: 3rem 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.65rem, 3.3vw, 2.25rem);
+      font-weight: 700;
+      color: var(--text-white);
+    }
+
+    .section-header h2 span {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-footer-btn {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 3.8rem 0 2.2rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .hero-small {
+      font-size: 0.98rem;
+      color: var(--purple-light);
+      font-weight: 500;
+      margin-bottom: 0.45rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.25rem, 4.8vw, 3.4rem);
+      font-weight: 700;
+      line-height: 1.18;
+      margin-bottom: 0.9rem;
+    }
+
+    .hero h1 span.gradient-text {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      color: var(--text-gray);
+      font-size: 1rem;
+      max-width: 580px;
+      margin-bottom: 1.6rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .social-links {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .social-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-white);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    }
+
+    .social-btn:hover {
+      transform: translateY(-3px);
+      border-color: var(--purple-accent);
+      background: var(--gradient-primary);
+      box-shadow: 0 8px 22px var(--purple-glow);
+    }
+
+    .portrait-wrap {
+      display: flex;
+      justify-content: center;
+    }
+
+    .portrait-frame {
+      width: 310px;
+      max-width: 100%;
+      padding: 5px;
+      border-radius: 160px 160px 28px 28px;
+      background: var(--gradient-primary);
+      box-shadow: 0 18px 48px var(--purple-glow);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .portrait-frame:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 22px 58px rgba(168, 85, 247, 0.7);
+    }
+
+    .portrait-frame img {
+      width: 100%;
+      aspect-ratio: 4 / 4.6;
+      object-fit: cover;
+      object-position: top center;
+      border-radius: 155px 155px 24px 24px;
+      display: block;
+      background: #160d26;
+    }
+
+    /* Statistics Section */
+    .stats-bar {
+      margin-top: 2.6rem;
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 1.4rem 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.38);
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 0.4rem 1rem;
+      position: relative;
+    }
+
+    .stat-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 15%;
+      height: 70%;
+      width: 1px;
+      background: var(--border-subtle);
+    }
+
+    .stat-highlight {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--purple-light);
+      margin-bottom: 0.15rem;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-gray);
+    }
+
+    /* About Preview Card */
+    .about-preview-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 2.2rem 1.8rem;
+      text-align: center;
+      max-width: 860px;
+      margin: 0 auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.38);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .about-preview-card:hover {
+      border-color: var(--purple-accent);
+      box-shadow: 0 12px 34px var(--purple-glow);
+    }
+
+    .about-preview-card p {
+      color: var(--text-gray);
+      font-size: 1rem;
+      margin-bottom: 1.4rem;
+    }
+
+    /* Three Column Grid */
+    .three-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.75rem;
+    }
+
+    .service-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+      transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-7px);
+      border-color: var(--purple-accent);
+      box-shadow: 0 14px 36px var(--purple-glow);
+    }
+
+    .service-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .service-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 13px;
+      background: rgba(168, 85, 247, 0.16);
+      color: var(--purple-light);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .service-num {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--purple-light);
+    }
+
+    .service-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .service-card p {
+      color: var(--text-gray);
+      font-size: 0.9rem;
+      margin-bottom: 1.2rem;
+      flex-grow: 1;
+    }
+
+    .learn-link {
+      color: var(--purple-light);
+      background: none;
+      border: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .learn-link:hover {
+      color: #fff;
+      transform: translateX(3px);
+    }
+
+    /* Portfolio Cards */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.85rem;
+      margin-bottom: 2.2rem;
+    }
+
+    .filter-btn {
+      padding: 0.58rem 1.35rem;
+      border-radius: 50px;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-card);
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover {
+      color: var(--text-white);
+      border-color: var(--purple-light);
+    }
+
+    .filter-btn.active {
+      background: var(--gradient-primary);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 4px 18px var(--purple-glow);
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.42);
+      transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-7px);
+      border-color: var(--purple-accent);
+      box-shadow: 0 14px 36px var(--purple-glow);
+    }
+
+    .project-thumb {
+      height: 185px;
+      overflow: hidden;
+      background: #1b0f30;
+    }
+
+    .project-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+      display: block;
+    }
+
+    .project-card:hover .project-thumb img {
+      transform: scale(1.07);
+    }
+
+    .project-body {
+      padding: 1.35rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .project-body h3 {
+      font-size: 1.12rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .project-body p {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-bottom: 0.9rem;
+      flex-grow: 1;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      padding: 0.22rem 0.65rem;
+      border-radius: 6px;
+      background: rgba(168, 85, 247, 0.14);
+      color: var(--purple-light);
+      border: 1px solid rgba(168, 85, 247, 0.28);
+    }
+
+    /* Reviews Cards */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2.2rem;
+    }
+
+    .summary-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 1.5rem 1.2rem;
+      text-align: center;
+    }
+
+    .summary-value {
+      font-size: clamp(1.75rem, 3vw, 2.2rem);
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .summary-label {
+      color: var(--text-gray);
+      font-size: 0.9rem;
+    }
+
+    .review-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.38);
+      transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .review-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--purple-accent);
+      box-shadow: 0 12px 34px var(--purple-glow);
+    }
+
+    .reviewer-row {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .reviewer-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--purple-accent);
+    }
+
+    .reviewer-name {
+      font-size: 0.98rem;
+      font-weight: 600;
+    }
+
+    .reviewer-role {
+      font-size: 0.8rem;
+      color: var(--purple-light);
+    }
+
+    .stars {
+      color: var(--purple-light);
+      font-size: 0.95rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .review-card p {
+      color: var(--text-gray);
+      font-size: 0.9rem;
+    }
+
+    /* Full About Sub-sections */
+    .about-full-grid {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 2.2rem;
+      align-items: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .about-portrait-box {
+      background: var(--gradient-primary);
+      padding: 4px;
+      border-radius: 24px;
+      max-width: 340px;
+      margin: 0 auto;
+      box-shadow: 0 14px 40px var(--purple-glow);
+    }
+
+    .about-portrait-box img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      object-position: top center;
+      border-radius: 20px;
+      display: block;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.3rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 1.2rem 1.35rem;
+    }
+
+    .skill-head {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.92rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+
+    .skill-pct {
+      color: var(--purple-light);
+    }
+
+    .progress-track {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      background: var(--gradient-primary);
+      border-radius: 999px;
+      transition: width 1s ease;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .info-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 1.15rem 0.9rem;
+      text-align: center;
+    }
+
+    .info-label {
+      font-size: 0.76rem;
+      color: var(--purple-light);
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    .info-value {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* Work Process Timeline */
+    .process-timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.4rem;
+      margin-top: 2rem;
+      position: relative;
+    }
+
+    .step-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 1.4rem 1.1rem;
+      text-align: center;
+    }
+
+    .step-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      color: #fff;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .step-card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .step-card p {
+      font-size: 0.86rem;
+      color: var(--text-gray);
+    }
+
+    /* Contact CTA */
+    .cta-box {
+      background: linear-gradient(145deg, rgba(24, 14, 42, 0.94) 0%, rgba(38, 18, 68, 0.94) 100%);
+      border: 1px solid var(--purple-accent);
+      border-radius: 24px;
+      padding: 3.2rem 2rem;
+      text-align: center;
+      box-shadow: 0 14px 44px var(--purple-glow);
+    }
+
+    .cta-box h2 {
+      font-size: clamp(1.7rem, 3.6vw, 2.35rem);
+      margin-bottom: 0.6rem;
+    }
+
+    .cta-box p {
+      color: var(--text-gray);
+      font-size: 1rem;
+      margin-bottom: 1.65rem;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.75rem 1rem;
+      border-top: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-top: 2rem;
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(9, 4, 16, 0.85);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      z-index: 2000;
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #160d26;
+      border: 1px solid var(--purple-light);
+      border-radius: 18px;
+      max-width: 480px;
+      width: 100%;
+      padding: 2rem;
+      position: relative;
+      box-shadow: 0 15px 45px var(--purple-glow);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 0.9rem;
+      right: 1.15rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 1024px) {
+      .info-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .process-timeline {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .three-grid,
+      .about-full-grid,
+      .skills-grid,
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        text-align: center;
+      }
+
+      .hero-desc {
+        margin: 0 auto 1.6rem;
+      }
+
+      .hero-actions,
+      .social-links {
+        justify-content: center;
+      }
+
+      .stats-bar {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .stat-item:not(:last-child)::after {
+        display: none;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .menu-toggle {
+        display: flex;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #120920;
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 1.2rem;
+        border-bottom: 1px solid var(--border-subtle);
+        display: none;
+      }
+
+      .nav-links.show {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .process-timeline,
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <nav class="navbar">
+      <a href="#home" class="logo" data-view="home">Muhammad <span>Siddeq</span></a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="active" data-view="home">Home</a></li>
+        <li><a href="#services" data-view="services">Services</a></li>
+        <li><a href="#about" data-view="about">About</a></li>
+        <li><a href="#portfolio" data-view="portfolio">Portfolio</a></li>
+        <li><a href="#reviews" data-view="reviews">Reviews</a></li>
+        <li><a href="contect.html" class="btn-gradient">Hire Me</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HOME VIEW -->
+    <section id="homeView" class="page-view active">
+      <div class="hero container" id="home">
+        <div class="hero-grid">
+          <div>
+            <p class="hero-small">Hello, I am Muhammad Siddeq</p>
+            <h1>Website Designer &amp; <span class="gradient-text">Developer</span></h1>
+            <p class="hero-desc">
+              I create modern, responsive and attractive websites. I love turning creative ideas into beautiful digital experiences using HTML, CSS and JavaScript.
+            </p>
+
+            <div class="hero-actions">
+              <a href="contect.html" class="btn-gradient">Hire Me</a>
+              <a href="cv.html" class="btn-outline">Download cv</a>                  
+            </div>
+
+            <div class="social-links" aria-label="Social Media Links">
+              
+              
+            </div>
+          </div>
+
+          <div class="portrait-wrap">
+            <div class="portrait-frame">
+              <img src="Confident Developer at a Modern Workspace.png" alt="Muhammad Siddeq - Website Designer & Developer" />
+              <div class="social-links" aria-label="Social Media Links">
+              
+              
+              <a href="https://www.linkedin.com/in/muhammad-siddeq/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 8.5H3.56V19h3.38V8.5zM5.25 3.5a1.97 1.97 0 1 0 0 3.94 1.97 1.97 0 0 0 0-3.94zM20.44 13.02c0-3.16-1.69-4.63-3.94-4.63-1.82 0-2.63 1-3.08 1.7V8.5h-3.38c.04.96 0 10.5 0 10.5h3.38v-5.86c0-.31.02-.63.12-.85.25-.63.83-1.28 1.8-1.28 1.27 0 1.78.97 1.78 2.38V19h3.38v-5.98z"/></svg>
+              </a>
+            </div>
+            </div>
+            
+          </div>
+          
+        </div>
+
+        <div class="stats-bar">
+          <div class="stat-item">
+            <div class="stat-highlight">7+ Years</div>
+            <div class="stat-label">7+ Years Cooking Experience</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-highlight">HTML · CSS · JS</div>
+            <div class="stat-label">Web Development Skills</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-highlight">Modern UI</div>
+            <div class="stat-label">Creative Projects</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- About Preview -->
+      <section class="section-block container">
+        <div class="section-header">
+          <h2>About <span>Me</span></h2>
+        </div>
+        <div class="about-preview-card">
+          <p>
+            Hi, I'm Muhammad Siddeq. I'm passionate about web development and creating beautiful, responsive websites. My journey includes learning web technologies, CIT and developing creativity through 7 years of cooking experience.
+          </p>
+          <button type="button" class="btn-outline" data-view="about">Read More</button>
+        </div>
+      </section>
+
+      <!-- Services Preview -->
+      <section class="section-block container">
+        <div class="section-header">
+          <h2>My <span>Services</span></h2>
+        </div>
+        <div class="three-grid">
+          <article class="service-card">
+            <div>
+              <div class="service-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              </div>
+              <h3>Web Development</h3>
+              <p>Building fast, clean, and functional websites using HTML, CSS, and JavaScript.</p>
+            </div>
+            <button type="button" class="learn-link" data-view="services">Learn More &rarr;</button>
+          </article>
+
+          <article class="service-card">
+            <div>
+              <div class="service-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+              </div>
+              <h3>Responsive Web Design</h3>
+              <p>Creating websites that look great on mobile phones, tablets, and desktop screens.</p>
+            </div>
+            <button type="button" class="learn-link" data-view="services">Learn More &rarr;</button>
+          </article>
+
+          <article class="service-card">
+            <div>
+              <div class="service-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              </div>
+              <h3>Portfolio Website Design</h3>
+              <p>Designing personal portfolios to showcase skills, projects, and achievements.</p>
+            </div>
+            <button type="button" class="learn-link" data-view="services">Learn More &rarr;</button>
+          </article>
+        </div>
+        <div class="section-footer-btn">
+          <button type="button" class="btn-outline" data-view="services">View All Services</button>
+        </div>
+      </section>
+
+      <!-- Featured Portfolio Preview -->
+      <section class="section-block container">
+        <div class="section-header">
+          <h2>Featured <span>Portfolio</span></h2>
+        </div>
+        <div class="three-grid">
+          <article class="project-card">
+            <div class="project-thumb">
+              <img src="Confident Developer at a Modern Workspace.png" alt="Personal Portfolio Website" />
+            </div>
+            <div class="project-body">
+              <h3>Personal Portfolio Website</h3>
+              <div class="tags">
+                <span class="tag">HTML</span>
+                <span class="tag">CSS</span>
+                <span class="tag">JavaScript</span>
+              </div>
+              <button type="button" class="btn-gradient" data-view="portfolio">View Project</button>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-thumb">
+              <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Restaurant Website" />
+            </div>
+            <div class="project-body">
+              <h3>Restaurant Website</h3>
+              <div class="tags">
+                <span class="tag">HTML</span>
+                <span class="tag">CSS</span>
+                <span class="tag">Responsive</span>
+              </div>
+              <button type="button" class="btn-gradient" data-view="portfolio">View Project</button>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-thumb">
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="Business Landing Page" />
+            </div>
+            <div class="project-body">
+              <h3>Business Landing Page</h3>
+              <div class="tags">
+                <span class="tag">HTML</span>
+                <span class="tag">CSS</span>
+                <span class="tag">UI Design</span>
+              </div>
+              <button type="button" class="btn-gradient" data-view="portfolio">View Project</button>
+            </div>
+          </article>
+        </div>
+        <div class="section-footer-btn">
+          <button type="button" class="btn-outline" data-view="portfolio">View All Projects</button>
+        </div>
+      </section>
+
+      <!-- Reviews Preview -->
+      <section class="section-block container">
+        <div class="section-header">
+          <h2>Client <span>Reviews</span></h2>
+        </div>
+        <div class="three-grid">
+          <article class="review-card">
+            <div class="reviewer-row">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" alt="Ahmed Khan" class="reviewer-avatar" />
+              <div class="reviewer-name">Ahmed Khan</div>
+            </div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p>"Modern, clean design and smooth mobile responsiveness. Very happy with the result."</p>
+          </article>
+
+          <article class="review-card">
+            <div class="reviewer-row">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80" alt="Sarah Ali" class="reviewer-avatar" />
+              <div class="reviewer-name">Sarah Ali</div>
+            </div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p>"Creative layout, clear communication, and timely delivery for my brand website."</p>
+          </article>
+
+          <article class="review-card">
+            <div class="reviewer-row">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80" alt="Usman Malik" class="reviewer-avatar" />
+              <div class="reviewer-name">Usman Malik</div>
+            </div>
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p>"Attention to detail and polished UI made our website stand out immediately."</p>
+          </article>
+        </div>
+        <div class="section-footer-btn">
+          <button type="button" class="btn-outline" data-view="reviews">View All Reviews</button>
+        </div>
+      </section>
+
+      <!-- Contact CTA -->
+      <section class="section-block container">
+        <div class="cta-box">
+          <h2>Let's Work Together</h2>
+          <p>Have an idea for a website? Let's turn your ideas into reality.</p>
+          <div class="cta-actions">
+            <a href="contect.html" class="btn-gradient">Hire Me</a>
+            <a href="03152661758" class="btn-outline">Contact Me</a>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- SERVICES VIEW -->
+    <section id="servicesView" class="page-view">
+      <div class="container" id="services" style="padding-top: 3rem;">
+        <div class="section-header">
+          <h2>My <span>Services</span></h2>
+          <p style="color: var(--text-gray); margin-top: 0.5rem;">I create modern, responsive and professional websites to help businesses and individuals build their online presence.</p>
+        </div>
+
+        <div class="three-grid" id="allServicesGrid"></div>
+
+        <div class="section-header" style="margin-top: 3.2rem;">
+          <h2>Work <span>Process</span></h2>
+        </div>
+        <div class="process-timeline">
+          <div class="step-card"><div class="step-circle">1</div><h3>Planning</h3><p>Understanding the client's requirements.</p></div>
+          <div class="step-card"><div class="step-circle">2</div><h3>Design</h3><p>Creating a modern website layout.</p></div>
+          <div class="step-card"><div class="step-circle">3</div><h3>Development</h3><p>Building the website with HTML, CSS and JavaScript.</p></div>
+          <div class="step-card"><div class="step-circle">4</div><h3>Delivery</h3><p>Testing, optimizing and delivering the final website.</p></div>
+        </div>
+
+        <div class="cta-box" style="margin-top: 3.2rem;">
+          <h2>Need a Website for Your Business?</h2>
+          <p>Let's work together to create a beautiful and professional website for your brand.</p>
+          <div class="cta-actions">
+            <a href="mailto:muhammadsiddeq42@mail.com" class="btn-gradient">Hire Me</a>
+            <button type="button" class="btn-outline" data-view="portfolio">View Portfolio</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT VIEW -->
+    <section id="aboutView" class="page-view">
+      <div class="container" id="about" style="padding-top: 3rem;">
+        <div class="section-header">
+          <h2>About <span>Me</span></h2>
+          <p style="color: var(--purple-light); margin-top: 0.4rem;">Get to know my journey, skills and passion.</p>
+        </div>
+
+        <div class="about-full-grid">
+          <div class="about-portrait-box">
+            <img src="Confident Developer at a Modern Workspace.png" alt="Muhammad Siddeq Portrait" />
+          </div>
+          <div>
+            <p style="color: var(--text-gray); margin-bottom: 1rem;">
+              Hello! I'm Muhammad Siddeq, a passionate web developer who loves creating modern, attractive and responsive websites. I enjoy turning creative ideas into beautiful digital experiences using HTML, CSS and JavaScript.
+            </p>
+            <p style="color: var(--text-gray);">
+              Along with my web development journey, I also have 7 years of cooking experience, which has taught me creativity, patience, discipline and attention to detail. I believe these qualities help me in my development work as well.
+            </p>
+          </div>
+        </div>
+
+        <div class="three-grid" style="margin-bottom: 2.5rem;">
+          <div class="service-card"><h3>Matriculation</h3><p>Completed in 2025 with a strong academic foundation.</p></div>
+          <div class="service-card"><h3>1st Year</h3><p>Pursuing intermediate studies in 2026 alongside web development.</p></div>
+          <div class="service-card"><h3>CIT</h3><p>Certificate in Information Technology — computer &amp; IT fundamentals.</p></div>
+        </div>
+
+        <div class="skills-grid" id="aboutSkillsGrid">
+          <div class="skill-card" data-pct="90"><div class="skill-head"><span>HTML</span><span class="skill-pct">90%</span></div><div class="progress-track"><div class="progress-fill"></div></div></div>
+          <div class="skill-card" data-pct="85"><div class="skill-head"><span>CSS</span><span class="skill-pct">85%</span></div><div class="progress-track"><div class="progress-fill"></div></div></div>
+          <div class="skill-card" data-pct="75"><div class="skill-head"><span>JavaScript</span><span class="skill-pct">75%</span></div><div class="progress-track"><div class="progress-fill"></div></div></div>
+          <div class="skill-card" data-pct="85"><div class="skill-head"><span>Responsive Web Design</span><span class="skill-pct">85%</span></div><div class="progress-track"><div class="progress-fill"></div></div></div>
+          <div class="skill-card" data-pct="80"><div class="skill-head"><span>UI Design</span><span class="skill-pct">80%</span></div><div class="progress-track"><div class="progress-fill"></div></div></div>
+          <div class="skill-card" data-pct="80"><div class="skill-head"><span>Problem Solving</span><span class="skill-pct">80%</span></div><div class="progress-track"><div class="progress-fill"></div></div></div>
+        </div>
+
+        <div class="info-grid">
+          <div class="info-card"><div class="info-label">Name</div><div class="info-value">Muhammad Siddeq</div></div>
+          <div class="info-card"><div class="info-label">Profession</div><div class="info-value">Web Developer</div></div>
+          <div class="info-card"><div class="info-label">Education</div><div class="info-value">Matric + 1st Year + CIT</div></div>
+          <div class="info-card"><div class="info-label">Experience</div><div class="info-value">7 Years in Cooking</div></div>
+          <div class="info-card"><div class="info-label">Skills</div><div class="info-value">HTML, CSS, JavaScript</div></div>
+        </div>
+
+        <div class="about-preview-card" style="margin-bottom: 2.5rem;">
+          <h3 style="margin-bottom: 0.6rem; color: var(--purple-light);">My Future Goals</h3>
+          <p style="margin-bottom: 0;">
+            My goal is to become a professional web developer, improve my programming skills, create high-quality websites and work on exciting projects with clients around the world.
+          </p>
+        </div>
+
+        <div class="cta-box">
+          <h2>Let's Build Something Amazing Together</h2>
+          <p>Have an idea for a website? I'm ready to turn your vision into reality.</p>
+          <div class="cta-actions">
+            <a href="mailto:muhammadsiddeq42@mail.com" class="btn-gradient">Hire Me</a>
+            <button type="button" class="btn-outline" data-view="portfolio">View Portfolio</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO VIEW -->
+    <section id="portfolioView" class="page-view">
+      <div class="container" id="portfolio" style="padding-top: 3rem;">
+        <div class="section-header">
+          <h2>My Creative <span>Portfolio</span></h2>
+          <p style="color: var(--text-gray); margin-top: 0.4rem;">Explore my latest projects and creative work.</p>
+        </div>
+
+        <div class="filter-bar">
+          <button type="button" class="filter-btn active" data-filter="all">All Projects</button>
+          <button type="button" class="filter-btn" data-filter="web-design">Web Design</button>
+          <button type="button" class="filter-btn" data-filter="web-development">Web Development</button>
+          <button type="button" class="filter-btn" data-filter="responsive">Responsive Websites</button>
+        </div>
+
+        <div class="three-grid" id="portfolioGrid"></div>
+
+        <div class="cta-box" style="margin-top: 3rem;">
+          <h2>Have a project in mind? Let's work together!</h2>
+          <p>Check out client feedback or start a conversation directly.</p>
+          <div class="cta-actions">
+            <a href="mailto:muhammadsiddeq42@mail.com" class="btn-gradient">Hire Me</a>
+            <button type="button" class="btn-outline" data-view="reviews">View All Reviews</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEWS VIEW -->
+    <section id="reviewsView" class="page-view">
+      <div class="container" id="reviews" style="padding-top: 3rem;">
+        <div class="section-header">
+          <h2>Client <span>Reviews</span> &amp; Testimonials</h2>
+          <p style="color: var(--text-gray); margin-top: 0.4rem;">See what clients say about my work, creativity and professionalism.</p>
+        </div>
+
+        <div class="summary-grid">
+          <div class="summary-card"><div class="summary-value">5.0</div><div class="summary-label">Average Rating</div></div>
+          <div class="summary-card"><div class="summary-value">100+</div><div class="summary-label">Happy Clients</div></div>
+          <div class="summary-card"><div class="summary-value">100%</div><div class="summary-label">Client Satisfaction</div></div>
+        </div>
+
+        <div class="three-grid" id="allReviewsGrid"></div>
+
+        <div class="cta-box" style="margin-top: 3rem;">
+          <h2>Want to work with me?</h2>
+          <p>Let's create something amazing together.</p>
+          <div class="cta-actions">
+            <a href="mailto:muhammadsiddeq42@mail.com" class="btn-gradient">Hire Me</a>
+            <button type="button" class="btn-outline" data-view="portfolio">View Portfolio</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Muhammad Siddeq. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Details Modal -->
+  <div class="modal" id="infoModal">
+    <div class="modal-box">
+      <button type="button" class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
+      <h3 id="modalTitle" style="color: var(--purple-light); margin-bottom: 0.6rem;">Details</h3>
+      <p id="modalDesc" style="color: var(--text-gray); margin-bottom: 1.35rem;">Description</p>
+      <a href="mailto:muhammadsiddeq42@mail.com" class="btn-gradient">Hire Me</a>
+    </div>
+  </div>
+
+  <script>
+    const servicesData = [
+      { num: "01", title: "Web Development", desc: "Building modern, fast and functional websites using HTML, CSS and JavaScript." },
+      { num: "02", title: "Responsive Web Design", desc: "Creating websites that look perfect on mobile phones, tablets and desktop screens." },
+      { num: "03", title: "Landing Page Design", desc: "Designing attractive landing pages that grab attention and help businesses convert visitors into customers." },
+      { num: "04", title: "Portfolio Website", desc: "Creating professional personal portfolios to showcase skills, projects and achievements." },
+      { num: "05", title: "Website UI Design", desc: "Designing clean, beautiful and user-friendly website interfaces with modern layouts." },
+      { num: "06", title: "Website Customization", desc: "Improving existing websites by updating layouts, colors, styles, responsiveness and functionality." }
+    ];
+
+    const projectsData = [
+      { title: "Personal Portfolio Website", desc: "Modern dark-themed developer portfolio with smooth UI, filters, and responsive layout.", cat: ["web-design", "responsive"], tags: ["HTML", "CSS", "JavaScript"], img: "Confident Developer at a Modern Workspace.png" },
+      { title: "Restaurant Website", desc: "Digital dining showcase with interactive menu, table booking, and mobile-friendly design.", cat: ["web-design", "responsive"], tags: ["HTML", "CSS", "JavaScript"], img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" },
+      { title: "Business Landing Page", desc: "High-converting landing page crafted with purple gradients and clean card layouts.", cat: ["web-design"], tags: ["HTML", "CSS", "JavaScript"], img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" },
+      { title: "E-Commerce Website", desc: "Online storefront layout with product filtering, cart UI, and responsive grid cards.", cat: ["web-development", "responsive"], tags: ["HTML", "CSS", "JavaScript"], img: "https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&w=800&q=80" },
+      { title: "Responsive Business Website", desc: "Multi-section business website adapted for mobile, tablet, and desktop screens.", cat: ["responsive", "web-development"], tags: ["HTML", "CSS", "JavaScript"], img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80" },
+      { title: "Modern Dashboard UI", desc: "Clean analytics dashboard interface with interactive widgets and dark mode styling.", cat: ["web-development", "web-design"], tags: ["HTML", "CSS", "JavaScript"], img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" }
+    ];
+
+    const reviewsData = [
+      { name: "Ahmed Khan", role: "Business Owner", review: "Excellent website design. The website looks modern, professional and works perfectly on mobile.", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" },
+      { name: "Sarah Ali", role: "Entrepreneur", review: "Very creative developer. He understood my requirements and delivered an amazing website.", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80" },
+      { name: "Usman Malik", role: "Restaurant Owner", review: "Great work, smooth communication and beautiful design. Highly recommended.", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80" },
+      { name: "Fatima Noor", role: "Designer", review: "Professional work with attention to every detail. I really loved the final design.", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80" },
+      { name: "Bilal Ahmed", role: "Startup Founder", review: "Responsive, fast and modern website. Exactly what I needed for my business.", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&q=80" },
+      { name: "Hamza Raza", role: "Client", review: "Excellent experience working together. The design and functionality were outstanding.", avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&q=80" }
+    ];
+
+    const views = {
+      home: document.getElementById("homeView"),
+      services: document.getElementById("servicesView"),
+      about: document.getElementById("aboutView"),
+      portfolio: document.getElementById("portfolioView"),
+      reviews: document.getElementById("reviewsView")
+    };
+
+    const navLinks = document.querySelectorAll(".nav-links a[data-view]");
+    const menuToggle = document.getElementById("menuToggle");
+    const navMenu = document.getElementById("navLinks");
+
+    function animateAboutSkills() {
+      document.querySelectorAll("#aboutSkillsGrid .skill-card").forEach(card => {
+        const fill = card.querySelector(".progress-fill");
+        if (fill) fill.style.width = `${card.getAttribute("data-pct")}%`;
+      });
+    }
+
+    function showView(viewName) {
+      Object.values(views).forEach(v => v.classList.remove("active"));
+      if (views[viewName]) views[viewName].classList.add("active");
+
+      navLinks.forEach(link => {
+        link.classList.toggle("active", link.getAttribute("data-view") === viewName);
+      });
+
+      navMenu.classList.remove("show");
+      if (viewName === "about") setTimeout(animateAboutSkills, 120);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.querySelectorAll("[data-view]").forEach(el => {
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        showView(el.getAttribute("data-view"));
+      });
+    });
+
+    menuToggle.addEventListener("click", () => navMenu.classList.toggle("show"));
+
+    const allServicesGrid = document.getElementById("allServicesGrid");
+    allServicesGrid.innerHTML = servicesData.map(s => `
+      <article class="service-card">
+        <div>
+          <div class="service-top">
+            <div class="service-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+            <span class="service-num">${s.num}</span>
+          </div>
+          <h3>${s.title}</h3>
+          <p>${s.desc}</p>
+        </div>
+        <button type="button" class="learn-link modal-trigger" data-title="${s.num} — ${s.title}" data-desc="${s.desc}">Learn More &rarr;</button>
+      </article>
+    `).join("");
+
+    const portfolioGrid = document.getElementById("portfolioGrid");
+    const filterButtons = document.querySelectorAll(".filter-btn");
+
+    function renderPortfolio(filter = "all") {
+      const list = filter === "all" ? projectsData : projectsData.filter(p => p.cat.includes(filter));
+      portfolioGrid.innerHTML = list.map(p => `
+        <article class="project-card">
+          <div class="project-thumb"><img src="${p.img}" alt="${p.title}" loading="lazy" /></div>
+          <div class="project-body">
+            <h3>${p.title}</h3>
+            <p>${p.desc}</p>
+            <div class="tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+            <button type="button" class="btn-gradient modal-trigger" data-title="${p.title}" data-desc="${p.desc}">View Project</button>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        renderPortfolio(btn.dataset.filter);
+      });
+    });
+
+    document.getElementById("allReviewsGrid").innerHTML = reviewsData.map(r => `
+      <article class="review-card">
+        <div class="reviewer-row">
+          <img src="${r.avatar}" alt="${r.name}" class="reviewer-avatar" loading="lazy" />
+          <div>
+            <div class="reviewer-name">${r.name}</div>
+            <div class="reviewer-role">${r.role}</div>
+          </div>
+        </div>
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p>"${r.review}"</p>
+      </article>
+    `).join("");
+
+    const modal = document.getElementById("infoModal");
+    document.addEventListener("click", (e) => {
+      const trig = e.target.closest(".modal-trigger");
+      if (trig) {
+        document.getElementById("modalTitle").textContent = trig.dataset.title;
+        document.getElementById("modalDesc").textContent = trig.dataset.desc;
+        modal.classList.add("open");
+      }
+    });
+
+    document.getElementById("modalClose").addEventListener("click", () => modal.classList.remove("open"));
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) modal.classList.remove("open");
+    });
+
+    renderPortfolio();
+  </script>
+</body>
+</html>

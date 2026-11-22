@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hire Me | Muhammad Siddeq</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #09040f;
+      color: #ffffff;
+      padding: 60px 20px;
+    }
+
+    .hire-wrap {
+      max-width: 650px;
+      margin: 0 auto;
+      text-align: center;
+      background: #150a24;
+      border: 1px solid rgba(232, 121, 249, 0.25);
+      border-radius: 18px;
+      padding: 32px 24px;
+    }
+
+    .hire-wrap h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .hire-wrap h2 span {
+      color: #e879f9;
+    }
+
+    .hire-wrap p {
+      color: #cbd5e1;
+      margin-bottom: 24px;
+    }
+
+    .hire-me-btn {
+      padding: 12px 28px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #9333ea, #ec4899);
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .hire-me-btn:hover {
+      opacity: 0.92;
+    }
+
+    .contact-box {
+      display: none;
+      margin-top: 24px;
+      padding: 20px;
+      border-radius: 14px;
+      background: #0b0514;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .contact-box.active {
+      display: block;
+    }
+
+    .contact-label {
+      font-size: 0.9rem;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+    }
+
+    .phone-display {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #f0abfc;
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
+    }
+
+    .contact-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .action-btn {
+      padding: 9px 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(232, 121, 249, 0.4);
+      background: #1d0c33;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.92rem;
+      cursor: pointer;
+    }
+
+    .action-btn:hover {
+      background: #2b124b;
+    }
+
+    .copied-msg {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: #86efac;
+      min-height: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hire-wrap">
+    <h2>Hire <span>Me</span></h2>
+    <p>Click the button below to view my direct contact number.</p>
+
+    <!-- Apna number yahan data-phone aur neeche link mein badlein -->
+    <button type="button" id="hireMeBtn" class="hire-me-btn">Hire Me</button>
+
+    <div id="contactBox" class="contact-box">
+      <div class="contact-label">Direct Contact Number</div>
+      <div id="phoneNumberText" class="phone-display">03152616758</div>
+
+      <div class="contact-actions">
+        <button type="button" id="copyBtn" class="action-btn">Copy Number</button>
+        <a id="callLink" href="tel:03152616758" class="action-btn">Call Now</a>
+        <a id="waLink" href="https://wa.me/923000000000" target="_blank" rel="noopener" class="action-btn">WhatsApp</a>
+      </div>
+
+      <div id="copiedMsg" class="copied-msg"></div>
+    </div>
+  </div>
+
+  <script>
+    const hireMeBtn = document.getElementById("hireMeBtn");
+    const contactBox = document.getElementById("contactBox");
+    const copyBtn = document.getElementById("copyBtn");
+    const phoneText = document.getElementById("phoneNumberText");
+    const copiedMsg = document.getElementById("copiedMsg");
+
+    hireMeBtn.addEventListener("click", function () {
+      contactBox.classList.toggle("active");
+    });
+
+    copyBtn.addEventListener("click", function () {
+      const numberToCopy = phoneText.textContent.trim();
+      navigator.clipboard.writeText(numberToCopy).then(function () {
+        copiedMsg.textContent = "Number copied!";
+        setTimeout(function () {
+          copiedMsg.textContent = "";
+        }, 2000);
+      });
+    });
+  </script>
+
+</body>
+</html>

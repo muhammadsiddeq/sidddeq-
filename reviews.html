@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reviews | Muhammad Siddeq</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-dark: #0d0716;
+      --bg-card: rgba(22, 13, 38, 0.72);
+      --purple-accent: #a855f7;
+      --purple-light: #c084fc;
+      --purple-glow: rgba(168, 85, 247, 0.45);
+      --gradient-primary: linear-gradient(135deg, #7e22ce 0%, #a855f7 55%, #ec4899 100%);
+      --text-white: #ffffff;
+      --text-gray: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border-subtle: rgba(168, 85, 247, 0.22);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    body::before,
+    body::after {
+      content: '';
+      position: fixed;
+      width: 430px;
+      height: 430px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.16) 0%, transparent 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body::before {
+      top: -110px;
+      left: -110px;
+    }
+
+    body::after {
+      bottom: -120px;
+      right: -110px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(13, 7, 22, 0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .navbar {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--text-white);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+
+    .logo span {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-gray);
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text-white);
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 100%;
+      height: 2px;
+      background: var(--gradient-primary);
+      border-radius: 2px;
+    }
+
+    .btn-gradient {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.68rem 1.5rem;
+      background: var(--gradient-primary);
+      color: var(--text-white);
+      font-weight: 600;
+      font-size: 0.92rem;
+      border: none;
+      border-radius: 50px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 18px rgba(168, 85, 247, 0.35);
+    }
+
+    .btn-gradient:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 26px rgba(168, 85, 247, 0.65);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.68rem 1.5rem;
+      border: 1px solid var(--purple-light);
+      color: var(--text-white);
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.92rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline:hover {
+      background: rgba(168, 85, 247, 0.16);
+      transform: translateY(-2px);
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      width: 26px;
+      height: 2.5px;
+      background: var(--text-white);
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 4.5rem 1.5rem 2.5rem;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.15rem, 4.8vw, 3.25rem);
+      font-weight: 700;
+      color: var(--text-white);
+      margin-bottom: 0.85rem;
+      line-height: 1.2;
+    }
+
+    .hero h1 span {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      color: var(--text-gray);
+      font-size: 1.05rem;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin: 1.5rem 0 3.25rem;
+    }
+
+    .summary-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 1.75rem 1.25rem;
+      text-align: center;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.38);
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .summary-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--purple-accent);
+      box-shadow: 0 12px 32px var(--purple-glow);
+    }
+
+    .summary-value {
+      font-size: clamp(1.8rem, 3.2vw, 2.35rem);
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.3rem;
+    }
+
+    .summary-label {
+      color: var(--text-gray);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.85rem;
+      margin-bottom: 4.5rem;
+    }
+
+    .review-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.42);
+      transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .review-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.55s ease, transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .review-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--purple-accent);
+      box-shadow: 0 14px 38px var(--purple-glow);
+    }
+
+    .review-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.15rem;
+    }
+
+    .client-info {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+    }
+
+    .client-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--purple-accent);
+      box-shadow: 0 0 14px rgba(168, 85, 247, 0.35);
+      flex-shrink: 0;
+    }
+
+    .client-name {
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--text-white);
+      line-height: 1.25;
+    }
+
+    .client-role {
+      font-size: 0.82rem;
+      color: var(--purple-light);
+    }
+
+    .quote-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: rgba(168, 85, 247, 0.14);
+      color: var(--purple-light);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .stars {
+      display: flex;
+      gap: 0.25rem;
+      color: var(--purple-light);
+      font-size: 1rem;
+      margin-bottom: 0.9rem;
+      letter-spacing: 1px;
+    }
+
+    .review-text {
+      color: var(--text-gray);
+      font-size: 0.93rem;
+    }
+
+    .cta-section {
+      background: linear-gradient(145deg, rgba(24, 14, 42, 0.9) 0%, rgba(36, 17, 64, 0.9) 100%);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
+      padding: 3.5rem 2rem;
+      text-align: center;
+      margin-bottom: 4rem;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    .cta-section h2 {
+      font-size: clamp(1.65rem, 3.6vw, 2.35rem);
+      font-weight: 700;
+      color: var(--text-white);
+      margin-bottom: 0.55rem;
+    }
+
+    .cta-section p {
+      color: var(--text-gray);
+      font-size: 1.05rem;
+      margin-bottom: 1.65rem;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.75rem 1rem;
+      border-top: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 992px) {
+      .reviews-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 860px) {
+      .menu-toggle {
+        display: flex;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #120920;
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 1.2rem;
+        border-bottom: 1px solid var(--border-subtle);
+        display: none;
+      }
+
+      .nav-links.show {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .summary-grid,
+      .reviews-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">Muhammad <span>Siddeq</span></a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="reviews.html" class="active">Reviews</a></li>
+        <li><a href="mailto:muhammadsiddeq42@mail.com" class="btn-gradient">Hire Me</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="reviews">
+    <section class="hero">
+      <h1>Client <span>Reviews</span> &amp; Testimonials</h1>
+      <p>See what clients say about my work, creativity and professionalism.</p>
+    </section>
+
+    <div class="container">
+      <section class="summary-grid" aria-label="Rating Summary">
+        <div class="summary-card">
+          <div class="summary-value">5.0</div>
+          <div class="summary-label">Average Rating</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-value">100+</div>
+          <div class="summary-label">Happy Clients</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-value">100%</div>
+          <div class="summary-label">Client Satisfaction</div>
+        </div>
+      </section>
+
+      <section class="reviews-grid" id="reviewsGrid" aria-label="Client Testimonials"></section>
+
+      <section class="cta-section">
+        <h2>Want to work with me?</h2>
+        <p>Let's create something amazing together.</p>
+        <div class="cta-actions">
+          <a href="mailto:muhammadsiddeq42@mail.com" class="btn-gradient">Hire Me</a>
+          <a href="portfolio.html" class="btn-outline">Portfolio</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Muhammad Siddeq. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const reviewsData = [
+      {
+        name: "Ahmed Khan",
+        profession: "Business Owner",
+        review: "Excellent website design. The website looks modern, professional and works perfectly on mobile.",
+        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80"
+      },
+      {
+        name: "Sarah Ali",
+        profession: "Entrepreneur",
+        review: "Very creative developer. He understood my requirements and delivered an amazing website.",
+        avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80"
+      },
+      {
+        name: "Usman Malik",
+        profession: "Restaurant Owner",
+        review: "Great work, smooth communication and beautiful design. Highly recommended.",
+        avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80"
+      },
+      {
+        name: "Fatima Noor",
+        profession: "Designer",
+        review: "Professional work with attention to every detail. I really loved the final design.",
+        avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80"
+      },
+      {
+        name: "Bilal Ahmed",
+        profession: "Startup Founder",
+        review: "Responsive, fast and modern website. Exactly what I needed for my business.",
+        avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&q=80"
+      },
+      {
+        name: "Hamza Raza",
+        profession: "Client",
+        review: "Excellent experience working together. The design and functionality were outstanding.",
+        avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&q=80"
+      }
+    ];
+
+    const reviewsGrid = document.getElementById("reviewsGrid");
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    function renderReviews() {
+      reviewsGrid.innerHTML = reviewsData.map((item, idx) => `
+        <article class="review-card" style="transition-delay: ${idx * 70}ms;">
+          <div>
+            <div class="review-top">
+              <div class="client-info">
+                <img src="${item.avatar}" alt="${item.name}" class="client-avatar" loading="lazy" />
+                <div>
+                  <h3 class="client-name">${item.name}</h3>
+                  <span class="client-role">${item.profession}</span>
+                </div>
+              </div>
+              <span class="quote-icon" aria-hidden="true">&ldquo;</span>
+            </div>
+            <div class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="review-text">"${item.review}"</p>
+        </article>
+      `).join("");
+
+      const cards = document.querySelectorAll(".review-card");
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      cards.forEach(card => observer.observe(card));
+    }
+
+    menuToggle.addEventListener("click", () => navLinks.classList.toggle("show"));
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => navLinks.classList.remove("show"));
+    });
+
+    renderReviews();
+  </script>
+</body>
+</html>

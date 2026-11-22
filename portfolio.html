@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio | Muhammad Siddeq</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-dark: #0d0716;
+      --bg-card: #160d26;
+      --purple-primary: #9333ea;
+      --purple-light: #c084fc;
+      --purple-glow: rgba(147, 51, 234, 0.45);
+      --gradient-primary: linear-gradient(135deg, #7e22ce 0%, #a855f7 50%, #ec4899 100%);
+      --text-main: #f8fafc;
+      --text-muted: #a1a1aa;
+      --border-subtle: rgba(168, 85, 247, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    body::before,
+    body::after {
+      content: '';
+      position: fixed;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(147, 51, 234, 0.16) 0%, transparent 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body::before {
+      top: -100px;
+      left: -100px;
+    }
+
+    body::after {
+      bottom: -120px;
+      right: -100px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(13, 7, 22, 0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .navbar {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+
+    .logo span {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--text-main);
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 100%;
+      height: 2px;
+      background: var(--gradient-primary);
+      border-radius: 2px;
+    }
+
+    .btn-gradient {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.65rem 1.4rem;
+      background: var(--gradient-primary);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: none;
+      border-radius: 50px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 18px rgba(147, 51, 234, 0.35);
+    }
+
+    .btn-gradient:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(168, 85, 247, 0.6);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.65rem 1.4rem;
+      border: 1px solid var(--purple-light);
+      color: var(--text-main);
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline:hover {
+      background: rgba(168, 85, 247, 0.16);
+      transform: translateY(-2px);
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      width: 26px;
+      height: 2.5px;
+      background: var(--text-main);
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .hero {
+      padding: 4rem 1.5rem 2.2rem;
+      max-width: 1080px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.35fr 0.65fr;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .hero-content {
+      text-align: left;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 4.5vw, 3.25rem);
+      font-weight: 700;
+      margin-bottom: 0.7rem;
+      line-height: 1.2;
+    }
+
+    .hero h1 span {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero .subtitle {
+      font-size: 1.12rem;
+      color: var(--purple-light);
+      font-weight: 500;
+      margin-bottom: 0.9rem;
+    }
+
+    .hero .intro {
+      color: var(--text-muted);
+      font-size: 0.97rem;
+      max-width: 620px;
+    }
+
+    .hero-avatar-wrap {
+      display: flex;
+      justify-content: center;
+    }
+
+    .hero-avatar {
+      width: 210px;
+      height: 210px;
+      border-radius: 24px;
+      padding: 4px;
+      background: var(--gradient-primary);
+      box-shadow: 0 12px 35px var(--purple-glow);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .hero-avatar:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 16px 42px rgba(168, 85, 247, 0.65);
+    }
+
+    .hero-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      border-radius: 20px;
+      display: block;
+    }
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.85rem;
+      margin: 2rem 0 3rem;
+    }
+
+    .filter-btn {
+      padding: 0.6rem 1.35rem;
+      border-radius: 50px;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-card);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover {
+      color: var(--text-main);
+      border-color: var(--purple-light);
+    }
+
+    .filter-btn.active {
+      background: var(--gradient-primary);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 4px 18px var(--purple-glow);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 2rem;
+      margin-bottom: 5rem;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+      animation: fadeUp 0.5s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--purple-light);
+      box-shadow: 0 12px 35px var(--purple-glow);
+    }
+
+    .project-thumb {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+      background: #1f1135;
+    }
+
+    .project-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+      display: block;
+    }
+
+    .project-card:hover .project-thumb img {
+      transform: scale(1.08);
+    }
+
+    .project-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .project-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .project-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1.1rem;
+      flex-grow: 1;
+    }
+
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.35rem;
+    }
+
+    .tech-tag {
+      font-size: 0.76rem;
+      font-weight: 500;
+      padding: 0.25rem 0.7rem;
+      border-radius: 6px;
+      background: rgba(168, 85, 247, 0.14);
+      color: var(--purple-light);
+      border: 1px solid rgba(168, 85, 247, 0.28);
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 0.85rem;
+    }
+
+    .btn-card {
+      flex: 1;
+      text-align: center;
+      padding: 0.58rem 0.9rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-demo {
+      background: var(--gradient-primary);
+      color: #fff;
+      border: none;
+      box-shadow: 0 4px 14px rgba(147, 51, 234, 0.35);
+    }
+
+    .btn-demo:hover {
+      box-shadow: 0 6px 20px rgba(168, 85, 247, 0.65);
+      transform: translateY(-2px);
+    }
+
+    .btn-code {
+      background: transparent;
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-code:hover {
+      border-color: var(--purple-light);
+      background: rgba(168, 85, 247, 0.12);
+    }
+
+    .cta-section {
+      background: linear-gradient(145deg, #170d29 0%, #22113d 100%);
+      border: 1px solid var(--border-subtle);
+      border-radius: 22px;
+      padding: 3.5rem 2rem;
+      text-align: center;
+      margin-bottom: 4rem;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    .cta-section h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.75rem 1rem;
+      border-top: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(9, 4, 16, 0.85);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      z-index: 2000;
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--bg-card);
+      border: 1px solid var(--purple-light);
+      border-radius: 18px;
+      max-width: 520px;
+      width: 100%;
+      padding: 2rem;
+      box-shadow: 0 15px 45px var(--purple-glow);
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.2rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      color: #fff;
+    }
+
+    .modal-box h3 {
+      margin-bottom: 0.6rem;
+      color: var(--purple-light);
+    }
+
+    .modal-box p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 860px) {
+      .menu-toggle {
+        display: flex;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #120920;
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 1.2rem;
+        border-bottom: 1px solid var(--border-subtle);
+        display: none;
+      }
+
+      .nav-links.show {
+        display: flex;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 2rem;
+        padding-top: 3rem;
+      }
+
+      .hero-content {
+        text-align: center;
+      }
+
+      .hero .intro {
+        margin: 0 auto;
+      }
+
+      .hero-avatar {
+        width: 175px;
+        height: 175px;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">Muhammad <span>Siddeq</span></a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#services">Services</a></li>
+        <li><a href="index.html#about">About</a></li>
+        <li><a href="portfolio.html" class="active">Portfolio</a></li>
+        <li><a href="reviews.html">Reviews</a></li>
+        <li><a href="mailto:muhammadsiddeq42@mail.com" class="btn-gradient">Hire Me</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="portfolio">
+    <section class="hero">
+      <div class="hero-content">
+        <h1>My Creative <span>Portfolio</span></h1>
+        <p class="subtitle">Explore my latest projects and creative work.</p>
+        <p class="intro">
+          I specialize in building fast, responsive, and visually engaging websites using clean HTML, modern CSS, and interactive JavaScript—turning ideas into seamless digital experiences.
+        </p>
+      </div>
+
+      <div class="hero-avatar-wrap">
+        <div class="hero-avatar">
+          <img src="muhammad siddeq .jpg.png" alt="Muhammad Siddeq - Web Developer" />
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="filter-bar" role="tablist" aria-label="Project Categories">
+        <button class="filter-btn active" data-filter="all">All Projects</button>
+        <button class="filter-btn" data-filter="web-design">Web Design</button>
+        <button class="filter-btn" data-filter="web-development">Web Development</button>
+        <button class="filter-btn" data-filter="responsive">Responsive Websites</button>
+      </div>
+
+      <section class="projects-grid" id="projectsGrid">
+        <div class="project-img-box">
+  <img src="restaurant." alt="Restaurant Website Preview" />
+</div>
+      </section>
+
+      <section class="cta-section">
+        <h2>Have a project in mind? Let's work together!</h2>
+        <div class="cta-actions">
+          <a href="mailto:muhammadsiddeq42@mail.com" class="btn-gradient">Hire Me</a>
+          <a href="reviews.html" class="btn-outline">Reviews</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Muhammad Siddeq. All Rights Reserved.</p>
+  </footer>
+
+  <div class="modal" id="projectModal">
+    <div class="modal-box">
+      <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
+      <h3 id="modalTitle">Project Title</h3>
+      <p id="modalDesc">Project details appear here.</p>
+      <a href="mailto:muhammadsiddeq42@mail.com" class="btn-gradient">Request Full Access</a>
+    </div>
+  </div>
+
+  <script>
+    const projects = [
+      {
+        title: "Personal Portfolio Website",
+        description: "A sleek dark-themed developer portfolio featuring smooth scroll animations, interactive filters, and modern UI styling.",
+        category: ["web-design", "responsive"],
+        tags: ["HTML", "CSS", "JavaScript"],
+        image: "restaurant.jpg.png"
+      },
+      {
+        title: "Restaurant Website",
+        description: "An appetizing digital dining experience with an interactive menu, table reservation form, and mobile-first layout.",
+        category: ["web-design", "responsive"],
+        tags: ["HTML", "CSS", "JavaScript"],
+        image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        title: "E-Commerce Website",
+        description: "Full-featured online store interface with dynamic product filtering, shopping cart drawer, and checkout summary.",
+        category: ["web-development", "responsive"],
+        tags: ["HTML", "CSS", "JavaScript"],
+        image: "https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        title: "Landing Page Design",
+        description: "High-converting SaaS product landing page crafted with vibrant gradients, glassmorphism cards, and smooth transitions.",
+        category: ["web-design"],
+        tags: ["HTML", "CSS", "JavaScript"],
+        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        title: "Responsive Business Website",
+        description: "Corporate multi-section website built for speed, accessibility, and seamless adaptation across phones, tablets, and desktops.",
+        category: ["responsive", "web-development"],
+        tags: ["HTML", "CSS", "JavaScript"],
+        image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        title: "Modern Dashboard UI",
+        description: "Interactive analytics dashboard with live data widgets, dark mode aesthetics, and clean JavaScript state updates.",
+        category: ["web-development", "web-design"],
+        tags: ["HTML", "CSS", "JavaScript"],
+        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80"
+      }
+    ];
+
+    const projectsGrid = document.getElementById("projectsGrid");
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+    const modal = document.getElementById("projectModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDesc = document.getElementById("modalDesc");
+    const modalClose = document.getElementById("modalClose");
+
+    function renderProjects(filter = "all") {
+      projectsGrid.innerHTML = "";
+      const filtered = filter === "all"
+        ? projects
+        : projects.filter(project => project.category.includes(filter));
+
+      filtered.forEach(project => {
+        const card = document.createElement("article");
+        card.className = "project-card";
+        const tagsHTML = project.tags.map(tag => `<span class="tech-tag">${tag}</span>`).join("");
+
+        card.innerHTML = `
+          <div class="project-thumb">
+            <img src="${project.image}" alt="${project.title}" loading="lazy" />
+          </div>
+          <div class="project-body">
+            <h3 class="project-title">${project.title}</h3>
+            <p class="project-desc">${project.description}</p>
+            <div class="tech-tags">${tagsHTML}</div>
+            <div class="card-actions">
+              <button class="btn-card btn-demo" data-type="Live Demo" data-title="${project.title}">Live Demo</button>
+              <button class="btn-card btn-code" data-type="Source Code" data-title="${project.title}">View Code</button>
+            </div>
+          </div>
+        `;
+        projectsGrid.appendChild(card);
+      });
+    }
+
+    filterButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        filterButtons.forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+        renderProjects(button.dataset.filter);
+      });
+    });
+
+    menuToggle.addEventListener("click", () => navLinks.classList.toggle("show"));
+
+    projectsGrid.addEventListener("click", (e) => {
+      if (e.target.matches(".btn-card")) {
+        modalTitle.textContent = `${e.target.dataset.title} — ${e.target.dataset.type}`;
+        modalDesc.textContent = `You selected "${e.target.dataset.type}" for ${e.target.dataset.title}. Replace placeholder URLs with your live demo or GitHub repository link.`;
+        modal.classList.add("open");
+      }
+    });
+
+    modalClose.addEventListener("click", () => modal.classList.remove("open"));
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) modal.classList.remove("open");
+    });
+
+    renderProjects();
+  </script>
+</body>
+</html>
